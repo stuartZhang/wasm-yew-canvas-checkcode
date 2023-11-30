@@ -1,0 +1,182 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        { // cargo check
+            "label": "check",
+            "command": "cargo",
+            "args": [
+                "check"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "cargo-check",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Checking for the Wasm target\\.\\.\\.",
+                    "endsPattern": "Your wasm pkg is ready to publish at"
+                },
+                "pattern": [{
+                    "regexp": "^\\s*(\\S+)\\s*$",
+                    "file": 1
+                }, {
+                    "regexp": "^\\s+(\\d+):(\\d+)\\s+(\\S+)\\s+(.*)\\s\\s+(.*)\\s*$",
+                    "line": 1,
+                    "column": 2,
+                    "severity": 3,
+                    "message": 4,
+                    "code": 5
+                }]
+            }
+        },
+        { // cargo fix
+            "label": "fix",
+            "command": "cargo",
+            "args": [
+                "fix",
+                "--allow-staged",
+                "--broken-code",
+                "--edition-idioms"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "cargo-check",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Checking nonce_generator",
+                    "endsPattern": "Finished dev"
+                },
+                "pattern": [{
+                    "regexp": "^\\s*(\\S+)\\s*$",
+                    "file": 1
+                }, {
+                    "regexp": "^\\s+(\\d+):(\\d+)\\s+(\\S+)\\s+(.*)\\s\\s+(.*)\\s*$",
+                    "line": 1,
+                    "column": 2,
+                    "severity": 3,
+                    "message": 4,
+                    "code": 5
+                }]
+            }
+        },
+        { // cargo build
+            "label": "build",
+            "command": "cargo",
+            "args": [
+                "build"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {}
+        },
+        { // cargo clean
+            "label": "cargo clean",
+            "hide": true,
+            "command": "cargo",
+            "args": [
+                "clean"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {}
+        },
+        { // wasm-pack test
+            "label": "wasm-test",
+            "type": "shell",
+            "command": "wasm-pack test ${input:target} ${input:headless} ${input:test}",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {}
+        }
+    ],
+    "inputs": [{
+        "type": "pickString",
+        "id": "headless",
+        "description": "是否无头运行",
+        "options": [
+          "--headless",
+          ""
+        ],
+        "default": "--headless"
+      }, {
+        "type": "pickString",
+        "id": "target",
+        "description": "运行环境",
+        "options": [
+            "--node --features=nodejs",
+            // 从这(https://googlechromelabs.github.io/chrome-for-testing/)下载与本地 Chrome 版本匹配的 chrome_driver。
+            "--chrome --chromedriver \"${env:LOCALAPPDATA}/Programs/chromedriver-118.0.5993.exe\"",
+            "--firefox",
+            "--safari"
+        ],
+        "default": "--chrome --chromedriver \"${env:LOCALAPPDATA}/Programs/chromedriver-118.0.5993.exe\""
+    }, {
+        "type": "pickString",
+        "id": "test",
+        "description": "测试单元",
+        "options": [
+            "--test=case4timeout",
+            "--test=case4interval",
+            "--test=case4request_animation_frame",
+            "--test=case4dom_event",
+            "--test=case4history",
+            "--test=suite4browser",
+            "--test=suite4nodejs"
+        ],
+        "default": "--test=browser_tests"
+    }]
+}
