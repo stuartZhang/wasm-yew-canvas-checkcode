@@ -1,0 +1,20 @@
+.root-element canvas.wasm-yew-canvas-checkcode {
+    width: 170px;
+    height: 60px;
+    margin-left: 4em;
+}
+.root-element form {
+    margin-left: 4em;
+}
+.root-element form label {
+    display: block;
+    white-space: nowrap;
+    margin-bottom: .3em;
+}
+.root-element form label span {
+    width: 4em;
+    display: inline-block;
+}
+.root-element form label button {
+    width: 234px;
+}

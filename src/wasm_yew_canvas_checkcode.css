@@ -1,0 +1,9 @@
+[{0}].wasm-yew-canvas-checkcode {{
+    cursor: pointer;
+    box-sizing: border-box;
+    user-select: none;
+}}
+[{0}].wasm-yew-canvas-checkcode:active {{
+    border-style: inset;
+    border-width: 1px;
+}}

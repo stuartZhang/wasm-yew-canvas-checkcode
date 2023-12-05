@@ -1,15 +1,41 @@
 [package]
-name = "wasm-dom-canvas-checkcode"
-version = "0.1.0"
+authors = ["stuart_zhang <stuartpage@qq.com>"]
+categories = ["WebAssembly", "Web programming"]
+description = "纯前端的，运行于 WASM 中的，基于 Canvas 2D 绘图引擎的，Yew.rs 图形验证码控件"
 edition = "2021"
+keywords = ["wasm", "yew", "canvas2d", "checkcode", "ui-controller"]
+license = "MIT"
+name = "wasm-yew-canvas-checkcode"
+version = "0.1.0"
+repository = "https://github.com/stuartZhang/nwg-webview-ctrl"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+getrandom = { version = "0.2.11", default-features = false, features = ["js"] }
+rand = { version = "0.8.5", default-features = false, features = ["getrandom"] }
 gloo = { version = "0.10.0", default-features = false, features = ["console", "utils"] }
+wasm-bindgen = {version = "0.2.87", default-features = false}
 web-sys = {version = "0.3.66", default-features = false, features = [
-    "CustomEvent",
-    "CustomEventInit",
-    "Event",
+    "CanvasRenderingContext2d",
+    "CssStyleDeclaration",
+    "DomTokenList",
+    "Element",
+    "HtmlCanvasElement",
+    "MouseEvent",
+    "TextMetrics"
 ]}
-yew = "0.21.0"
+yew = {version = "0.21.0", default-features = false }
+
+[dev-dependencies]
+deferred-future = {version = "0.1.5", default-features = false, features = ["local"]}
+gloo = { version = "0.10.0", default-features = false, features = ["dialogs"] }
+wasm-bindgen-test = "0.3.39"
+web-sys = {version = "0.3.66", default-features = false, features = [
+    "HtmlBodyElement",
+    "HtmlDivElement",
+    "HtmlInputElement",
+    "InputEvent",
+    "SubmitEvent"
+]}
+yew = {version = "0.21.0", default-features = false, features = ["csr"]}

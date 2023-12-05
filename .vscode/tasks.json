@@ -128,7 +128,7 @@
         { // wasm-pack test
             "label": "wasm-test",
             "type": "shell",
-            "command": "wasm-pack test ${input:target} ${input:headless} ${input:test}",
+            "command": "wasm-pack test ${input:target} --test=${fileBasenameNoExtension}",
             "presentation": {
                 "echo": true,
                 "reveal": "always",
@@ -145,38 +145,14 @@
     ],
     "inputs": [{
         "type": "pickString",
-        "id": "headless",
-        "description": "是否无头运行",
-        "options": [
-          "--headless",
-          ""
-        ],
-        "default": "--headless"
-      }, {
-        "type": "pickString",
         "id": "target",
         "description": "运行环境",
         "options": [
-            "--node --features=nodejs",
             // 从这(https://googlechromelabs.github.io/chrome-for-testing/)下载与本地 Chrome 版本匹配的 chrome_driver。
             "--chrome --chromedriver \"${env:LOCALAPPDATA}/Programs/chromedriver-118.0.5993.exe\"",
             "--firefox",
             "--safari"
         ],
         "default": "--chrome --chromedriver \"${env:LOCALAPPDATA}/Programs/chromedriver-118.0.5993.exe\""
-    }, {
-        "type": "pickString",
-        "id": "test",
-        "description": "测试单元",
-        "options": [
-            "--test=case4timeout",
-            "--test=case4interval",
-            "--test=case4request_animation_frame",
-            "--test=case4dom_event",
-            "--test=case4history",
-            "--test=suite4browser",
-            "--test=suite4nodejs"
-        ],
-        "default": "--test=browser_tests"
     }]
 }

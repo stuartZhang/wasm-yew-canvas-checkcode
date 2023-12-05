@@ -1,4 +1,5 @@
 {
+    "files.trimTrailingWhitespace": true,
     "rust-analyzer.procMacro.enable": true,
     "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
     "rust-analyzer.check.targets": "wasm32-unknown-unknown",
