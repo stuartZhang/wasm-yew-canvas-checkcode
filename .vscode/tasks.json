@@ -126,9 +126,55 @@
             "problemMatcher": {}
         },
         { // wasm-pack test
-            "label": "wasm-test",
+            "label": "wasm-test-http",
             "type": "shell",
             "command": "wasm-pack test ${input:target} --test=${fileBasenameNoExtension}",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {}
+        },
+        { // wasm-pack test
+            "label": "wasm-test-https",
+            "type": "shell",
+            "command": "http-server",
+            "args": [
+                "-o",
+                "-s",
+                "-g",
+                "-b",
+                "-c-1",
+                "-S",
+                "-C", ".vscode/cert.pem",
+                "-K", ".vscode/key.pem",
+                "-P", "http://${env:WASM_BINDGEN_TEST_ADDRESS}",
+                "-d", "false",
+                "-i", "false"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true,
+            "problemMatcher": {}
+        },
+        { // wasm-pack test
+            "dependsOn": ["wasm-test-http", "wasm-test-https"],
+            "label": "wasm-test",
             "presentation": {
                 "echo": true,
                 "reveal": "always",
